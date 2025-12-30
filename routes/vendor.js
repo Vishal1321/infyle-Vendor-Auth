@@ -87,5 +87,13 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+router.get("/me", auth, async (req, res) => {
+    try {
+      const vendor = await Vendor.findById(req.vendor.id).select("-password");
+      res.json({ vendor });
+    } catch (error) {
+      res.status(500).json({ message: "Server error" });
+    }
+  });
 
 module.exports = router;

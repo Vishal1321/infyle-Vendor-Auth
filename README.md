@@ -1,59 +1,35 @@
-# INFYLE Vendor Auth - Backend
+# Infyle Vendor Task - Backend
 
-This is the backend for **INFYLE Vendor Authentication & Product Approval Module** built with MERN stack.
+## Overview
+This is the backend for the Infyle Vendor Task. It includes vendor signup/login, JWT authentication, and product management.
 
 ## Tech Stack
-- Node.js + Express.js
-- MongoDB Atlas
-- Mongoose
+- Node.js
+- Express.js
+- MongoDB (Mongoose)
+- JWT for authentication
 - Bcrypt for password hashing
-- Dotenv for environment variables
-- JWT (to be implemented)
-- OAuth (Google) (to be implemented)
 
-## Setup Instructions
+## API Routes
 
-1. Clone the repo:
+### Vendor
+- **POST /vendor/signup** – Register a new vendor
+  - Body: `{ name, email, password, phone }`
+- **POST /vendor/login** – Login vendor
+  - Body: `{ email, password }`
+  - Returns: JWT token
 
-```bash
-git clone https://github.com/your-username/infyle-Vendor-Auth.git
+### Product
+- **POST /product/add** – Add new product (requires token)
+  - Header: `Authorization: Bearer <token>`
+  - Body: `{ name, description, price, category, image }`
 
-2.Install dependencies:
-npm install
-
-3.Create a .env file in the backend root folder with:
-MONGO_URI=your_mongodb_atlas_uri
+## Environment Variables
+Create a `.env` file with:
+MONGO_URI=<your-mongodb-uri>
+JWT_SECRET=<your-secret-key>
 PORT=5000
 
-4.Start the server:
-npx nodemon index.js
-Server should run on http:localhost:5000 and log:
-MONGODB connected
-Server running on port 5000
-
-API Endpoints
-POST /api/vendor/signup → Vendor signup with email/password
-Request Body (JSON):
-{
-  "name": "Vishal Thakur",
-  "email": "vishal@example.com",
-  "password": "Infyle123",
-  "phone": "9876543210"
-}
-Response (Success 201):
-
-{
-  "message": "Vendor registered successfully",
-  "vendor": {
-    "_id": "...",
-    "name": "Vishal Thakur",
-    "email": "vishal@example.com",
-    "phone": "9876543210",
-    "oauthProvider": "Local",
-    "createdAt": "...",
-    "updatedAt": "..."
-  }
-
-
-
-
+```bash
+npm install
+npm run dev
